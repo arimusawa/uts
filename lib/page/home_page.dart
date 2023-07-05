@@ -63,7 +63,6 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              
               padding:
                   const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
               child: Row(
