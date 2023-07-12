@@ -23,7 +23,7 @@ class SplashPage extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           const Text(
-            'Bring nature home',
+            'Bring nature',
             style: TextStyle(
               color: grey,
               fontSize: 16,
