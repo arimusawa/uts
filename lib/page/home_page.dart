@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:html';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:ui_13/core/color.dart';
 import 'package:ui_13/data/category_model.dart';
 import 'package:ui_13/data/plant_data.dart';
 import 'package:ui_13/page/details_page.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,7 +22,27 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     controller = PageController(viewportFraction: 0.6, initialPage: 0);
     super.initState();
+    _api();
   }
+
+   var dataJson;
+   int totalData = 0;
+  void _api() async { 
+    Map<String, String> headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  };
+
+   var response = await http
+      .get(Uri.parse('http://localhost:1337/api/list-tanamen'), headers: headers);
+
+  dataJson = jsonDecode(response.body);
+    print(dataJson["data"][0]["attributes"][0]);
+    setState(() {
+      totalData = dataJson["meta"]["pagination"]["total"];
+    });
+
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -194,11 +217,11 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 130.0,
               child: ListView.builder(
-                itemCount: populerPlants.length,
+                itemCount: totalData,
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.only(left: 20.0),
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (itemBuilder, index) {
+                itemBuilder: (data, index) {
                   return Container(
                     width: 200.0,
                     margin: const EdgeInsets.only(right: 20, bottom: 10),
@@ -217,31 +240,31 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Row(
                           children: [
-                            Image.asset(
-                              populerPlants[index].imagePath,
-                              width: 70,
-                              height: 70,
-                            ),
+                            // Image.asset(
+                            //   populerPlants[index].imagePath,
+                            //   width: 70,
+                            //   height: 70,
+                            // ),
                             const SizedBox(width: 10.0),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  populerPlants[index].name,
+                                  dataJson["data"]["index"]["attributes"]["namaTanaman"],
                                   style: TextStyle(
                                     color: black.withOpacity(0.7),
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
-                                Text(
-                                  '\$${populerPlants[index].price.toStringAsFixed(0)}',
-                                  style: TextStyle(
-                                    color: black.withOpacity(0.4),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12.0,
-                                  ),
-                                ),
+                                // Text(
+                                //   '\$${populerPlants[index].price.toStringAsFixed(0)}',
+                                //   style: TextStyle(
+                                //     color: black.withOpacity(0.4),
+                                //     fontWeight: FontWeight.w600,
+                                //     fontSize: 12.0,
+                                //   ),
+                                // ),
                               ],
                             )
                           ],
