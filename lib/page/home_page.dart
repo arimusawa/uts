@@ -37,8 +37,8 @@ class _HomePageState extends State<HomePage> {
       .get(Uri.parse('http://localhost:1337/api/list-tanamen'), headers: headers);
 
   dataJson = jsonDecode(response.body);
-    print(dataJson["data"][0]["attributes"][0]);
     setState(() {
+      dataJson = jsonDecode(response.body);
       totalData = dataJson["meta"]["pagination"]["total"];
     });
 
@@ -251,7 +251,7 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  dataJson["data"]["index"]["attributes"]["namaTanaman"],
+                                  dataJson["data"][index]["attributes"]["namaTanaman"],
                                   style: TextStyle(
                                     color: black.withOpacity(0.7),
                                     fontWeight: FontWeight.w800,

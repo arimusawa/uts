@@ -13,7 +13,7 @@ List<Plants> plants = [
   ),
   Plants(
     id: 1,
-    name: 'Succuient',
+    name: 'Lobelia',
     imagePath: 'assets/images/image2.jpg',
     category: 'Office',
     description:
@@ -23,7 +23,7 @@ List<Plants> plants = [
   ),
   Plants(
     id: 2,
-    name: 'Ficus retusa',
+    name: 'Geranium',
     imagePath: 'assets/images/image3.jpg',
     category: 'Office',
     description:
@@ -56,7 +56,7 @@ List<Plants> populerPlants = [
   ),
   Plants(
     id: 1,
-    name: 'Succuient',
+    name: 'Lobelia',
     imagePath: 'assets/images/02.png',
     category: 'Office',
     description:
